@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="wasm_exec.js"></script>
+    <script>
+        const go = new Go();
+        WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+            go.run(result.instance);
+        });
+        function encrypt() {
+            const message = document.getElementById('text-box').value
+            const result = encryptData(message)
+            document.getElementById('encrypted').value = result
+        } 
+        function decrypt() {
+            const encrypted = document.getElementById('encrypted').value
+            const result = decryptData(encrypted)
+            document.getElementById('decrypted').value = result
+        }       
+    </script>
+</head>
+
+<body>
+    <h1>Hello WebAssembly</h1>
+    <input id="text-box" />
+    <button onclick="encrypt()"> Say </button> <br />
+    <input id="encrypted" disabled="true"> 
+    <button onclick="decrypt()"> Decrypt </button> <br />
+    <input id="decrypted" disabled="true">
+</body>
+</html>
